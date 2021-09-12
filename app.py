@@ -13,6 +13,8 @@ from wtforms.validators import Length, Email
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from dash_application import create_dash_application
+
 
 
 app = Flask(__name__)
@@ -24,6 +26,8 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager()
 login.init_app(app)
+create_dash_application(app)
+
 
 @login.user_loader
 def user_loader(user_id):
@@ -88,6 +92,12 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for("index"))
+
+
+#@app.route("/potato")
+#@login_required
+#def potato():
+#    return "Potato"
 
 if __name__=="__main__":
     app.run()
